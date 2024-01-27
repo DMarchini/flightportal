@@ -41,10 +41,10 @@ QUERY_DELAY=30
 BOUNDS_BOX=secrets["bounds_box"]
 
 # Colours and timings
-ROW_ONE_COLOUR=0xEE82EE
-ROW_TWO_COLOUR=0x4B0082
-ROW_THREE_COLOUR=0xFFA500
-PLANE_COLOUR=0x4B0082
+ROW_ONE_COLOUR=0x70d6ff
+ROW_TWO_COLOUR=0xedf2f4
+ROW_THREE_COLOUR=0xfee600
+PLANE_COLOUR=0x006d77
 # Time in seconds to wait between scrolling one label and the next
 PAUSE_BETWEEN_LABEL_SCROLLING=3
 # speed plane animation will move - pause time per pixel shift in seconds
@@ -111,21 +111,21 @@ label1 = adafruit_display_text.label.Label(
     FONT,
     color=ROW_ONE_COLOUR,
     text="")
-label1.x = 1
+label1.x = 2
 label1.y = 4
 
 label2 = adafruit_display_text.label.Label(
     FONT,
     color=ROW_TWO_COLOUR,
     text="")
-label2.x = 1
+label2.x = 2
 label2.y = 15
 
 label3 = adafruit_display_text.label.Label(
     FONT,
     color=ROW_THREE_COLOUR,
     text="")
-label3.x = 1
+label3.x = 2
 label3.y = 25
 
 # text strings to go in the labels
@@ -161,7 +161,7 @@ def scroll(line):
         w.feed()
         time.sleep(TEXT_SPEED)
         #matrixportal.display.refresh(minimum_frames_per_second=0)
-        
+
 
 # Populate the labels, then scroll longer versions of the text
 def display_flight():
@@ -171,21 +171,21 @@ def display_flight():
     label2.text=label2_short
     label3.text=label3_short
     time.sleep(PAUSE_BETWEEN_LABEL_SCROLLING)
-    
+
     label1.x=matrixportal.display.width+1
     label1.text=label1_long
     scroll(label1)
     label1.text=label1_short
     label1.x=1
     time.sleep(PAUSE_BETWEEN_LABEL_SCROLLING)
-    
+
     label2.x=matrixportal.display.width+1
     label2.text=label2_long
     scroll(label2)
     label2.text=label2_short
     label2.x=1
     time.sleep(PAUSE_BETWEEN_LABEL_SCROLLING)
-    
+
     label3.x=matrixportal.display.width+1
     label3.text=label3_long
     scroll(label3)
@@ -248,7 +248,7 @@ def get_flight_details(fn):
                     # Stop reading chunks
                     print("Details lookup saved "+str(trail_end)+" bytes.")
                     return True
-    # Handle occasional URL fetching errors            
+    # Handle occasional URL fetching errors
     except (RuntimeError, OSError, HttpError) as e:
             print("Error--------------------------------------------------")
             print(e)
@@ -257,7 +257,7 @@ def get_flight_details(fn):
     #If we got here we got through all the JSON without finding the right trail entries
     print("Failed to find a valid trail entry in JSON")
     return False
-    
+
 
 # Look at the byte array that fetch_details saved into and extract any fields we want
 def parse_details_json():
@@ -419,7 +419,7 @@ while True:
     #print("Get flights...")
     flight_id=get_flights()
     w.feed()
-    
+
 
     if flight_id:
         if flight_id==last_flight:
@@ -438,12 +438,12 @@ while True:
                     print("error parsing JSON, skip displaying this flight")
             else:
                 print("error loading details, skip displaying this flight")
-            
+
             last_flight=flight_id
     else:
         #print("No flights found, clear display")
         clear_flight()
-    
+
     time.sleep(5)
 
 
